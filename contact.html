@@ -53,7 +53,7 @@
 
       <div class="field">
         <label for="phone">Phone number</label>
-        <input type="tel" id="phone" name="phone" inputmode="tel" placeholder="(555) 123-4567" pattern="(?:\([2-9][0-9]{2}\)[ ]?|[2-9][0-9]{2}[\-. ])[2-9][0-9]{2}[\-. ][0-9]{4}" title="Enter a valid 10-digit US phone number, such as (555) 123-4567." required>
+        <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="(555) 123-4567" maxlength="20" title="Enter a valid 10-digit US phone number, such as (555) 123-4567." required>
       </div>
 
       <div class="field">
@@ -85,7 +85,20 @@
 </footer>
 
 <script>
-  document.getElementById('contact-form').addEventListener('submit', function (event) {
+  const contactForm = document.getElementById('contact-form');
+  const phoneField = document.getElementById('phone');
+  const usPhonePattern = /^(?:\([2-9]\d{2}\) ?|[2-9]\d{2}[-. ])[2-9]\d{2}[-. ]\d{4}$/;
+
+  function validatePhone() {
+    const phoneNumber = phoneField.value.trim();
+    const isValid = phoneNumber === '' || usPhonePattern.test(phoneNumber);
+
+    phoneField.setCustomValidity(isValid ? '' : 'Enter a valid US phone number, such as (555) 123-4567.');
+  }
+
+  phoneField.addEventListener('input', validatePhone);
+  contactForm.addEventListener('submit', function (event) {
+    validatePhone();
     event.preventDefault();
     document.getElementById('contact-confirmation').hidden = false;
   });
