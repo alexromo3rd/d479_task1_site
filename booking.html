@@ -42,7 +42,7 @@
     <p>Children under twelve are half price. <a href="attractions.html">Choose a different attraction</a></p>
   </div>
 
-  <form action="index.html" method="get">
+  <form id="booking-form" action="index.html" method="get">
 
     <div class="panel calendar">
       <table>
@@ -70,7 +70,7 @@
         </tr>
         <tr>
           <td><span class="past">6</span></td>
-          <td><input type="radio" id="date-7" name="date" value="2026-09-07"><label for="date-7">7</label></td>
+          <td><input type="radio" id="date-7" name="date" value="2026-09-07" required><label for="date-7">7</label></td>
           <td><input type="radio" id="date-8" name="date" value="2026-09-08"><label for="date-8">8</label></td>
           <td><input type="radio" id="date-9" name="date" value="2026-09-09"><label for="date-9">9</label></td>
           <td><input type="radio" id="date-10" name="date" value="2026-09-10"><label for="date-10">10</label></td>
@@ -108,7 +108,7 @@
       </table>
 
       <div class="times">
-      <div class="slot"><input type="radio" id="time-0700" name="time" value="0700"><label for="time-0700">7:00 am</label></div>
+      <div class="slot"><input type="radio" id="time-0700" name="time" value="0700" required><label for="time-0700">7:00 am</label></div>
       <div class="slot"><input type="radio" id="time-0900" name="time" value="0900"><label for="time-0900">9:00 am</label></div>
       <div class="slot"><input type="radio" id="time-1100" name="time" value="1100"><label for="time-1100">11:00 am</label></div>
       <div class="slot"><input type="radio" id="time-1300" name="time" value="1300"><label for="time-1300">1:00 pm</label></div>
@@ -130,6 +130,11 @@
 
     <button type="submit" class="button button-wide">Complete booking</button>
 
+    <div id="booking-confirmation" class="confirmation" role="status" aria-live="polite" hidden>
+      <h3>Booking successful</h3>
+      <p>Your volcano hike is reserved. We look forward to seeing you in Taniti.</p>
+    </div>
+
   </form>
 
 </main>
@@ -139,6 +144,13 @@
     <p>Taniti Visitor Bureau &middot; Harbor Street, Taniti City</p>
   </div>
 </footer>
+
+<script>
+  document.getElementById('booking-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    document.getElementById('booking-confirmation').hidden = false;
+  });
+</script>
 
 </body>
 </html>

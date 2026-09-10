@@ -206,6 +206,23 @@ h2:first-child {
   margin-top: 28px;
 }
 
+.confirmation {
+  background: #e8f1ef;
+  border: 1px solid #9bc2ba;
+  border-left: 4px solid var(--sea);
+  padding: 16px 20px;
+  margin-top: 20px;
+}
+
+.confirmation h3 {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+
+.confirmation p {
+  margin: 0;
+}
+
 /* Cards */
 
 .grid {
@@ -350,6 +367,17 @@ legend {
 .field textarea:focus {
   outline: 2px solid var(--sea);
   outline-offset: 1px;
+}
+
+.field input:user-invalid,
+.field textarea:user-invalid {
+  border-color: #b64b4b;
+  background: #fff8f8;
+}
+
+.field input:user-valid,
+.field textarea:user-valid {
+  border-color: #4f8b7c;
 }
 
 .field textarea {
