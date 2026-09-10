@@ -87,19 +87,47 @@
 <script>
   const contactForm = document.getElementById('contact-form');
   const phoneField = document.getElementById('phone');
-  const usPhonePattern = /^(?:\([2-9]\d{2}\) ?|[2-9]\d{2}[-. ])\d{3}[-. ]\d{4}$/;
+  const usPhonePattern = /^\([2-9]\d{2}\) \d{3}-\d{4}$/;
+
+  function formatPhone(value) {
+    const trimmed = value.trim();
+    if (/[^\d\s().+-]/.test(trimmed)) {
+      return trimmed;
+    }
+
+    let digits = trimmed.replace(/\D/g, '');
+    if (digits.length === 11 && digits.startsWith('1')) {
+      digits = digits.slice(1);
+    }
+
+    if (digits.length !== 10) {
+      return trimmed;
+    }
+
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  }
 
   function validatePhone() {
-    const phoneNumber = phoneField.value.trim();
+    const phoneNumber = formatPhone(phoneField.value);
     const isValid = phoneNumber === '' || usPhonePattern.test(phoneNumber);
 
     phoneField.setCustomValidity(isValid ? '' : 'Enter a valid US phone number, such as (555) 123-4567.');
+    return isValid;
   }
 
   phoneField.addEventListener('input', validatePhone);
+  phoneField.addEventListener('blur', function () {
+    if (validatePhone()) {
+      phoneField.value = formatPhone(phoneField.value);
+    }
+  });
+
   contactForm.addEventListener('submit', function (event) {
-    validatePhone();
     event.preventDefault();
+
+    if (validatePhone()) {
+      phoneField.value = formatPhone(phoneField.value);
+    }
 
     if (!contactForm.checkValidity()) {
       contactForm.reportValidity();
