@@ -380,6 +380,11 @@ legend {
   border-color: #4f8b7c;
 }
 
+#phone:not(:placeholder-shown):invalid {
+  border-color: #b64b4b;
+  background: #fff8f8;
+}
+
 .field textarea {
   height: 110px;
 }
